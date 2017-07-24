@@ -50,7 +50,7 @@
     self.sliderLine = [[UIView alloc] init];
     self.sliderLine.frame = CGRectMake(0, titleHeight - 1, self.sliderScrollView.firstWidth, 1);
     self.sliderLine.backgroundColor = [UIColor blueColor];
-    [self.sliderScrollView addSubview:self.sliderLine]; //一定要加载到最后一个才不破坏原有的view顺序
+    [self.sliderScrollView addSubview:self.sliderLine]; 
     
  
     
@@ -136,10 +136,6 @@
 
 #pragma mark UIScrollerView Delegate
 
-
-/**
- * 手指松开scrollView后，scrollView停止减速完毕就会调用这个
- */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self scrollViewDidEndScrollingAnimation:scrollView];
@@ -147,13 +143,10 @@
 }
 
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
-{
-    // 一些临时变量
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     CGFloat width = scrollView.frame.size.width;
     CGFloat height = scrollView.frame.size.height;
     CGFloat offsetX = scrollView.contentOffset.x;
-    // 当前位置需要显示的控制器的索引
     NSInteger index = offsetX / width;
     
     // 让对应的顶部标题居中显示
@@ -176,21 +169,15 @@
         [self.sliderLine setFrame:frame];
     }];
     
-    
-    // 取出需要显示的控制器
     UIViewController *willShowVc = self.childViewControllers[index];
-    
-    // 如果当前位置的位置已经显示过了，就直接返回
     if ([willShowVc isViewLoaded]) {
         return;
     }
-    // 添加控制器的view到contentScrollView中;
     willShowVc.view.frame = CGRectMake(offsetX, 0, width, height);
     [scrollView addSubview:willShowVc.view];
     
 }
 
-//scrollView滚动就会调用此方法
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView.contentOffset.x < 0) {
         CGPoint offset = self.contentScrollView.contentOffset;
@@ -201,7 +188,7 @@
         if (scale < 0 || scale > self.sliderScrollView.subviews.count - 1) {
             return;
         }
-        NSInteger leftIndex = scale; //当前滚动的label的索引（整数）];
+        NSInteger leftIndex = scale;
         CustomLabel *leftLabel = self.sliderScrollView.subviews[leftIndex];
         
         NSInteger rightIndex = leftIndex + 1;
