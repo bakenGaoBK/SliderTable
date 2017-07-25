@@ -45,7 +45,6 @@
         make.top.left.right.offset(0);
         make.height.mas_equalTo(titleHeight);
     }];
-    NSLog(@"%i",self.sliderScrollView.subviews.count);
     
     self.sliderLine = [[UIView alloc] init];
     self.sliderLine.frame = CGRectMake(0, titleHeight - 1, self.sliderScrollView.firstWidth, 1);
